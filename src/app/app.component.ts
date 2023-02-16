@@ -37,21 +37,21 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getEmployeeList();
+    this.getStudentList();
   }
 
-  openAddEditEmpForm() {
+  openAddEdiStudentForm() {
     const dialogRef = this._dialog.open(StudentAddEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+          this.getStudentList();
         }
       },
     });
   }
 
-  getEmployeeList() {
+  getStudentList() {
     this._empService.getStudentList().subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
@@ -74,8 +74,8 @@ export class AppComponent implements OnInit {
   deleteEmployee(id: number) {
     this._empService.deleteStudent(id).subscribe({
       next: (res) => {
-        this._coreService.openSnackBar('Employee deleted!', 'done');
-        this.getEmployeeList();
+        this._coreService.openSnackBar('Student deleted!', 'done');
+        this.getStudentList();
       },
       error: console.log,
     });
@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (val) => {
         if (val) {
-          this.getEmployeeList();
+          this.getStudentList();
         }
       },
     });

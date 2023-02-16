@@ -63,7 +63,7 @@ export class StudentAddEditComponent implements OnInit {
           .updateStudent(this.data.id, this.empForm.value)
           .subscribe({
             next: (val: any) => {
-              this._coreService.openSnackBar('Employee detail updated!');
+              this._coreService.openSnackBar('Student detail updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -73,7 +73,7 @@ export class StudentAddEditComponent implements OnInit {
       } else {
         this._empService.addStudent(this.empForm.value).subscribe({
           next: (val: any) => {
-            this._coreService.openSnackBar('Employee added successfully');
+            this._coreService.openSnackBar('Student added successfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
