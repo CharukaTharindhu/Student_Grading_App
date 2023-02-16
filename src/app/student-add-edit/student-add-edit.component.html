@@ -1,0 +1,123 @@
+<div mat-dialog-title>
+  <h1>Crate New Student</h1>
+</div>
+<form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Student name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter your name"
+          formControlName="name"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-radio-group aria-label="Select an option" formControlName="gender">
+        <mat-label><b>Gender</b></mat-label>
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Date of birth</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dob" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="container">
+        <div class="container">
+          <div class="row">
+            <button
+              class="btn btn-warning"
+              style="margin-bottom: 15px"
+              (click)="addSubject()"
+            >
+              Add Subjects
+            </button>
+            <div class="row" *ngFor="let item of items">
+              <div class="col-md-4">
+                <div class="dropdown">
+                  <label class="label" style="margin-right: 10px"
+                    >Subject Name</label
+                  >
+                  <select
+                    required
+                    class="form-select"
+                    type="text"
+                    name="subject"
+                    aria-label="Default select example"
+                    formControlName="subject"
+                  >
+                    <option value="">Select one subject</option>
+                    <option value="English">English</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="Art">Art</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <br />
+                <label class="label" style="margin-right: 10px">Marks</label>
+                <input
+                  (change)="marksOnChange(item.index)"
+                  required
+                  class="form-control"
+                  type="number"
+                  name="mark"
+                  placeholder="Enter subject mark"
+                  formControlName="mark"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <br />
+                <label class="label" style="margin-right: 10px">Grade</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="grade"
+                  value=""
+                  formControlName="grade"
+                />
+              </div>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Remark</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Enter your remark"
+              formControlName="remark"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+</form>
