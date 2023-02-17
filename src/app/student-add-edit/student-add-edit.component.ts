@@ -28,6 +28,8 @@ export class StudentAddEditComponent implements OnInit {
       grade: '',
     });
   }
+
+  //Set grade
   marksOnChange(mark: string) {
     let markValue = Number(mark);
     let grade;
