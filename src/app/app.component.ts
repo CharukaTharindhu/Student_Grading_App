@@ -16,8 +16,9 @@ export class AppComponent implements OnInit {
   title = 'student-grading-app';
 
   displayedColumns: string[] = [
+    'id',
     'name',
-    'dob',
+    'bob',
     'gender',
     'subject',
     'mark',
@@ -71,7 +72,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  deleteEmployee(id: number) {
+  deleteEmployee(id: any) {
     this._empService.deleteStudent(id).subscribe({
       next: (res) => {
         this._coreService.openSnackBar('Student deleted!', 'done');

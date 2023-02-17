@@ -10,7 +10,14 @@ import { StudentService } from '../services/student.service';
   styleUrls: ['./student-add-edit.component.scss'],
 })
 export class StudentAddEditComponent implements OnInit {
-  empForm: FormGroup;
+  subjectList: string[] = [
+    'Sinhala',
+    'Mathematics',
+    'Science',
+    'History',
+    'English',
+  ];
+  StudentForm: FormGroup;
   items: any[] = [];
   grade: string = '';
 
@@ -21,17 +28,19 @@ export class StudentAddEditComponent implements OnInit {
       grade: '',
     });
   }
-  marksOnChange(index: number) {
-    alert(this.items[index].value + ' ' + index); // this.items[index].value
-    if (this.items[index].value >= 0 && this.items[index].value <= 35) {
-      this.items[index].grade = 'F';
-    } else if (this.items[index].value > 35 && this.items[index].value <= 55) {
-      this.items[index].grade = 'C';
-    } else if (this.items[index].value > 55 && this.items[index].value <= 75) {
-      this.items[index].grade = 'B';
-    } else if (this.items[index].value > 75 && this.items[index].value <= 100) {
-      this.items[index].grade = 'A';
+  marksOnChange(mark: string) {
+    let markValue = Number(mark);
+    let grade;
+    if (markValue >= 0 && markValue <= 35) {
+      grade = 'F';
+    } else if (markValue > 35 && markValue < 55) {
+      grade = 'C';
+    } else if (markValue > 55 && markValue < 75) {
+      grade = 'B';
+    } else if (markValue > 75 && markValue <= 100) {
+      grade = 'A';
     }
+    this.StudentForm.get('grade')?.setValue(grade);
   }
 
   constructor(
@@ -41,10 +50,11 @@ export class StudentAddEditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _coreService: CoreService
   ) {
-    this.empForm = this._fb.group({
+    this.StudentForm = this._fb.group({
+      id: '',
       name: '',
       gender: '',
-      dob: '',
+      bod: '',
       subject: '',
       mark: '',
       grade: '',
@@ -53,25 +63,23 @@ export class StudentAddEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.empForm.patchValue(this.data);
+    this.StudentForm.patchValue(this.data);
   }
 
   onFormSubmit() {
-    if (this.empForm.valid) {
+    if (this.StudentForm.valid) {
       if (this.data) {
-        this._empService
-          .updateStudent(this.data.id, this.empForm.value)
-          .subscribe({
-            next: (val: any) => {
-              this._coreService.openSnackBar('Student detail updated!');
-              this._dialogRef.close(true);
-            },
-            error: (err: any) => {
-              console.error(err);
-            },
-          });
+        this._empService.updateStudent(this.StudentForm.value).subscribe({
+          next: (val: any) => {
+            this._coreService.openSnackBar('Student detail updated!');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
       } else {
-        this._empService.addStudent(this.empForm.value).subscribe({
+        this._empService.addStudent(this.StudentForm.value).subscribe({
           next: (val: any) => {
             this._coreService.openSnackBar('Student added successfully');
             this._dialogRef.close(true);

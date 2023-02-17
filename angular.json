@@ -37,8 +37,7 @@
           },
           "configurations": {
             "production": {
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "500kb",
                   "maximumError": "1mb"
@@ -64,12 +63,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "student-grading-app:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "student-grading-app:build:production"
             },
             "development": {
-              "browserTarget": "student-grading-app:build:development"
+              "browserTarget": "student-grading-app:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -102,6 +106,7 @@
         }
       }
     }
+
   },
   "cli": {
     "analytics": "76134e49-c1c6-4851-b457-c6357a0632a0"

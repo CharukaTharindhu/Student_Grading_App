@@ -1,118 +1,102 @@
 <div mat-dialog-title>
   <h1>Crate New Student</h1>
 </div>
-<form [formGroup]="empForm" (ngSubmit)="onFormSubmit()">
+<form [formGroup]="StudentForm" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
     <div class="row">
-      <mat-form-field appearance="outline">
+      <mat-form-field
+        appearance="outline"
+        style="width: 250px; margin-bottom: 5px"
+      >
         <mat-label>Student name</mat-label>
         <input
           matInput
           type="text"
           placeholder="Enter your name"
           formControlName="name"
+          required
         />
       </mat-form-field>
     </div>
     <div class="row">
       <mat-radio-group aria-label="Select an option" formControlName="gender">
         <mat-label><b>Gender</b></mat-label>
-        <mat-radio-button value="male">Male</mat-radio-button>
-        <mat-radio-button value="female">Female</mat-radio-button>
+        <mat-radio-button value="male" name="gender" required
+          >Male</mat-radio-button
+        >
+        <mat-radio-button value="female" name="gender" required
+          >Female</mat-radio-button
+        >
       </mat-radio-group>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Date of birth</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dob" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <div class="container">
-        <div class="container">
-          <div class="row">
-            <button
-              class="btn btn-warning"
-              style="margin-bottom: 15px"
-              (click)="addSubject()"
-            >
-              Add Subjects
-            </button>
-            <div class="row" *ngFor="let item of items">
-              <div class="col-md-4">
-                <div class="dropdown">
-                  <label class="label" style="margin-right: 10px"
-                    >Subject Name</label
-                  >
-                  <select
-                    required
-                    class="form-select"
-                    type="text"
-                    name="subject"
-                    aria-label="Default select example"
-                    formControlName="subject"
-                  >
-                    <option value="">Select one subject</option>
-                    <option value="English">English</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="Science">Science</option>
-                    <option value="History">History</option>
-                    <option value="Art">Art</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <br />
-                <label class="label" style="margin-right: 10px">Marks</label>
-                <input
-                  (change)="marksOnChange(item.index)"
-                  required
-                  class="form-control"
-                  type="number"
-                  name="mark"
-                  placeholder="Enter subject mark"
-                  formControlName="mark"
-                />
-              </div>
-
-              <div class="col-md-4">
-                <br />
-                <label class="label" style="margin-right: 10px">Grade</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  name="grade"
-                  value=""
-                  formControlName="grade"
-                />
-              </div>
-              <br />
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div class="container">
       <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Date of birth</mat-label>
+          <input
+            matInput
+            type="text"
+            [matDatepicker]="picker"
+            formControlName="bod"
+            required
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
         <div class="row">
-          <mat-form-field appearance="outline">
-            <mat-label>Remark</mat-label>
+          <mat-form-field appearance="outline" style="width: 250px">
+            <mat-label>Subject Name</mat-label>
+            <mat-select formControlName="subject" required>
+              <mat-option *ngFor="let val of subjectList" [value]="val"
+                >{{ val }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <br />
+
+          <mat-form-field appearance="outline" style="width: 250px">
+            <mat-label>Marks</mat-label>
             <input
               matInput
-              type="text"
-              placeholder="Enter your remark"
-              formControlName="remark"
+              type="number"
+              placeholder="Enter subject mark"
+              formControlName="mark"
+              (change)="marksOnChange(myInput.value)"
+              #myInput
+              required
             />
           </mat-form-field>
+          <br />
+
+          <mat-form-field appearance="outline" style="width: 250px">
+            <mat-label>Grade</mat-label>
+            <input matInput type="text" formControlName="grade" required />
+          </mat-form-field>
+          <br />
+        </div>
+
+        <div class="row">
+          <div class="row">
+            <mat-form-field appearance="outline" style="width: 250px">
+              <mat-label>Remark</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Enter your remark"
+                formControlName="remark"
+              />
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="action">
+  <div mat-dialog-actions class="action" style="margin-left: 60px">
     <button mat-raised-button type="button" [mat-dialog-close]="false">
       Cancel
     </button>
